@@ -1,0 +1,21 @@
+{
+  "name": "vue-use-request",
+  "version": "0.0.0",
+  "scripts": {
+    "dev": "vite",
+    "build": "vuedx-typecheck . && vite build"
+  },
+  "main": "dist/vue-use-request.umd.js",
+  "module": "dist/vue-use-request.es.js",
+  "dependencies": {
+    "vue": "^3.0.5"
+  },
+  "devDependencies": {
+    "@vitejs/plugin-vue": "^1.0.4",
+    "@vue/compiler-sfc": "^3.0.5",
+    "@vuedx/typecheck": "^0.4.1",
+    "@vuedx/typescript-plugin-vue": "^0.4.1",
+    "typescript": "^4.1.3",
+    "vite": "^2.0.0-beta.12"
+  }
+}
