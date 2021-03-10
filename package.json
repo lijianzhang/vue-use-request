@@ -1,17 +1,18 @@
 {
   "name": "vue-use-request",
-  "version": "0.0.0",
+  "version": "0.1.0",
   "scripts": {
     "test": "jest",
     "dev": "vite",
     "prepublishOnly": "jest",
-    "build": "vuedx-typecheck . && vite build"
+    "build": "vuedx-typecheck ./src && vite build && tsc"
   },
   "files": [
     "dist"
   ],
   "main": "dist/vue-use-request.umd.js",
   "module": "dist/vue-use-request.es.js",
+  "types": "dist/index.d.ts",
   "dependencies": {
     "vue": "^3.0.5"
   },
