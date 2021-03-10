@@ -1,6 +1,6 @@
 {
   "name": "vue-use-request",
-  "version": "0.0.0",
+  "version": "0.1.0",
   "scripts": {
     "test": "jest",
     "dev": "vite",
