@@ -1,6 +1,8 @@
 import { ref, UnwrapRef, watchEffect, unref } from 'vue';
 import { getTime, TimeFormat } from './time';
-import { debounce, throttle } from './utils';
+import { debounce, throttle } from 'lodash-es';
+
+
 interface IConfig<T> {
     initalValue?: T,
     /**
@@ -63,7 +65,6 @@ export function useRequest<T, E extends any>(requestFn: () => Promise<UnwrapRef<
     const error = ref<E | null>(null);
 
     let pollingKey = 0;
-    let times = 0;
     let handleRequest: (...args: any[]) => any = async function handleRequest() {
         clearTimeout(pollingKey);
         loading.value = true;
@@ -71,6 +72,7 @@ export function useRequest<T, E extends any>(requestFn: () => Promise<UnwrapRef<
             const cache = cacheMap.get(requestFn);
             if (cache.expirationTime >= Date.now()) {
                 data.value = cacheMap.get(requestFn).value;
+                loading.value = false;
                 return;
             } else {
                 cacheMap.delete(requestFn);
@@ -112,10 +114,10 @@ export function useRequest<T, E extends any>(requestFn: () => Promise<UnwrapRef<
 
 
     if (config.debounce) {
-        handleRequest = debounce(originHandleRequest, config.debounce)
+        handleRequest = debounce(originHandleRequest, getTime(config.debounce))
     }
     if (config.throttle) {
-        handleRequest = throttle(originHandleRequest, config.throttle);
+        handleRequest = throttle(originHandleRequest, getTime(config.throttle));
     }
 
     if (config.watch) {

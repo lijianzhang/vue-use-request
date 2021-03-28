@@ -14,10 +14,12 @@
   "module": "dist/vue-use-request.es.js",
   "types": "dist/index.d.ts",
   "dependencies": {
+    "lodash-es": "^4.17.21",
     "vue": "^3.0.5"
   },
   "devDependencies": {
     "@types/jest": "^26.0.20",
+    "@types/lodash-es": "^4.17.4",
     "@vitejs/plugin-vue": "^1.0.4",
     "@vue/compiler-sfc": "^3.0.5",
     "@vuedx/typecheck": "^0.4.1",
