@@ -80,7 +80,7 @@ describe('测试 userRequest 方法', () => {
         const { data } = useRequest(async () => {
             times = v.value;
             return times;
-        }, { watch: true });
+        }, { watch: [v] });
 
         expect(data.value).toEqual(null);
         await wait(1);

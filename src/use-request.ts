@@ -1,8 +1,8 @@
-import { ref, UnwrapRef, watchEffect, unref } from 'vue';
+import { ref, UnwrapRef, watch, unref, WatchSource } from 'vue';
 import { getTime, TimeFormat } from './time';
 import { debounce, throttle } from 'lodash-es';
 
-
+declare type MultiWatchSources = (WatchSource<unknown> | object)[];
 interface IConfig<T> {
     initalValue?: T,
     /**
@@ -11,7 +11,7 @@ interface IConfig<T> {
      * @type {boolean}
      * @memberof IConfig
      */
-    watch?: boolean;
+    watch?: MultiWatchSources;
     /**
      * 如果请求失败重试次数
      *
@@ -121,7 +121,7 @@ export function useRequest<T, E extends any>(requestFn: () => Promise<UnwrapRef<
     }
 
     if (config.watch) {
-        watchEffect(handleRequest);
+        watch(config.watch, handleRequest);
     }
 
     
