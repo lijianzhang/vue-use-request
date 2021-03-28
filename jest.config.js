@@ -2,8 +2,11 @@ const path = require('path');
 
 module.exports = {
     transform: {
-        '^.+\\.tsx?$': 'ts-jest',
+        '^.+\\.[jt]sx?$': 'esbuild-jest',
     },
+    transformIgnorePatterns: [
+        "<rootDir>/node_modules/(?!lodash-es)"
+    ],
     moduleFileExtensions: [
         'ts',
         'tsx',

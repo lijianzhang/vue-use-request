@@ -117,7 +117,7 @@ export function useRequest<T, E extends any>(requestFn: () => Promise<UnwrapRef<
         handleRequest = debounce(originHandleRequest, getTime(config.debounce))
     }
     if (config.throttle) {
-        handleRequest = throttle(originHandleRequest, getTime(config.throttle));
+        handleRequest = throttle(originHandleRequest, getTime(config.throttle), { leading: false });
     }
 
     if (config.watch) {
