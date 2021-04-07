@@ -14,6 +14,7 @@
   "module": "dist/vue-use-request.es.js",
   "types": "dist/index.d.ts",
   "dependencies": {
+    "axios": "^0.21.1",
     "lodash-es": "^4.17.21",
     "vue": "^3.0.5"
   },
