@@ -4,6 +4,7 @@ import { provideAxios } from './use-axios';
 import { VueQuery } from './vue-query';
 export * from './use-request';
 export { VueQuery } from './vue-query';
+export { useQuery } from './use-query';
 
 
 export function Request(axios: AxiosInstance) {

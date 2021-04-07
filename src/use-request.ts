@@ -3,7 +3,13 @@ import { getTime, TimeFormat } from './time';
 import { debounce, throttle } from 'lodash-es';
 
 declare type MultiWatchSources = (WatchSource<unknown> | object)[];
-interface IConfig<T> {
+export interface IConfig<T> {
+    /**
+     * 初始值
+     *
+     * @type {T}
+     * @memberof IConfig
+     */
     initalValue?: T,
     /**
      * 当函数内的响应式数据变化时，会重新触发请求
@@ -41,12 +47,12 @@ interface IConfig<T> {
      */
     throttle?: TimeFormat;
     /**
-     * 尝试取缓存数据
+     * 取缓存数据, 如果为true 则表示永久
      *
      * @type {TimeFormat}
      * @memberof IConfig
      */
-    cache?: TimeFormat;
+    cache?: TimeFormat | boolean;
 
     /**
      * 惰性运行请求
@@ -59,8 +65,9 @@ interface IConfig<T> {
 
 const cacheMap = new Map<any, any>();
 
-export function useRequest<T, E extends any>(requestFn: () => Promise<UnwrapRef<T>>, config: IConfig<T> = {}) {
-    const data = ref<T | null>(config?.initalValue ?? null);
+export function useRequest<T, E extends any>(requestFn: () => Promise<T>, config: IConfig<T> = {}) {
+    const data = ref<T | null>();
+    data.value = config?.initalValue ?? null;
     const loading = ref(false);
     const error = ref<E | null>(null);
 
@@ -95,7 +102,7 @@ export function useRequest<T, E extends any>(requestFn: () => Promise<UnwrapRef<
             }
 
             if (config.cache) {
-                cacheMap.set(requestFn, { value: unref(res), expirationTime: Date.now() + getTime(config.cache) })
+                cacheMap.set(requestFn, { value: unref(res), expirationTime: config.cache === true ? Number.MAX_VALUE : Date.now() + getTime(config.cache) })
             }
             data.value = res;
             error.value = null;
@@ -117,7 +124,7 @@ export function useRequest<T, E extends any>(requestFn: () => Promise<UnwrapRef<
         handleRequest = debounce(originHandleRequest, getTime(config.debounce))
     }
     if (config.throttle) {
-        handleRequest = throttle(originHandleRequest, getTime(config.throttle), { leading: false });
+        handleRequest = throttle(originHandleRequest, getTime(config.throttle));
     }
 
     if (config.watch) {
