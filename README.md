@@ -4,9 +4,10 @@
 ## 安装
 
 ```shell
-yarn add vue-request-vue
+yarn add vue-use-request
 #or
-npm install vue-request-vue
+npm install vue-use-request
+
 ```
 
 ## 使用
