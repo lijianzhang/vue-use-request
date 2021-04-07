@@ -34,7 +34,7 @@ describe('测试 userRequest 方法', () => {
         const { data, run } = useRequest(fn, { throttle: 40, lazy: true });
         run();
         await wait(20)
-        expect(fn.mock.calls.length).toEqual(0)
+        expect(fn.mock.calls.length).toEqual(1)
         await wait(30);
         expect(fn.mock.calls.length).toEqual(1)
         run();
