@@ -75,6 +75,7 @@ export function useRequest<T, E extends any>(requestFn: () => Promise<T>, config
     let handleRequest: (...args: any[]) => any = async function handleRequest() {
         clearTimeout(pollingKey);
         loading.value = true;
+
         if (config.cache && cacheMap.has(requestFn)) {
             const cache = cacheMap.get(requestFn);
             if (cache.expirationTime >= Date.now()) {
@@ -101,7 +102,7 @@ export function useRequest<T, E extends any>(requestFn: () => Promise<T>, config
                 }
             }
 
-            if (config.cache) {
+            if (config.cache && typeof window !== 'undefined') {
                 cacheMap.set(requestFn, { value: unref(res), expirationTime: config.cache === true ? Number.MAX_VALUE : Date.now() + getTime(config.cache) })
             }
             data.value = res;
@@ -143,8 +144,18 @@ export function useRequest<T, E extends any>(requestFn: () => Promise<T>, config
 
     const run = handleRequest;
 
+    /**
+     * 更新数据
+     *
+     * @param {T} newData
+     */
+    function update(newData: T) {
+        data.value = newData;
+    }
+
     return {
         run,
+        update,
         stopPolling,
         error,
         loading,
