@@ -1,6 +1,5 @@
-import { ref, UnwrapRef, watch, unref, WatchSource } from 'vue';
-import { getTime, TimeFormat } from './time';
-import { debounce, throttle } from 'lodash-es';
+import { ref } from 'vue';
+
 
 export interface IMutationOptions<T> {
     onSuccess?: (data: T) => any;
@@ -26,9 +25,9 @@ export function useMutation<T, A extends any[], M>(requestFn: (...args: A) => Pr
                 config.onSuccess(data.value!);
             }
         } catch (err) {
-            error.value = err;
+            error.value = err as any;
             if (config.onError) {
-                config.onError(err);
+                config.onError(err as any);
             }
         }
 

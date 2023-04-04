@@ -1,33 +1,33 @@
 {
-  "name": "vue-use-request",
-  "version": "0.2.2",
-  "scripts": {
-    "test": "jest",
-    "dev": "vite",
-    "prepublishOnly": "jest",
-    "build": "vuedx-typecheck ./src && vite build && tsc"
-  },
-  "files": [
-    "dist"
-  ],
-  "main": "dist/vue-use-request.umd.js",
-  "module": "dist/vue-use-request.es.js",
-  "types": "dist/index.d.ts",
-  "dependencies": {
-    "axios": "^0.21.1",
-    "lodash-es": "^4.17.21",
-    "vue": "^3.0.5"
-  },
-  "devDependencies": {
-    "@types/jest": "^26.0.20",
-    "@types/lodash-es": "^4.17.4",
-    "@vitejs/plugin-vue": "^1.0.4",
-    "@vue/compiler-sfc": "^3.0.5",
-    "@vuedx/typecheck": "^0.4.1",
-    "@vuedx/typescript-plugin-vue": "^0.4.1",
-    "esbuild-jest": "^0.5.0",
-    "jest": "^26.6.3",
-    "typescript": "^4.1.3",
-    "vite": "^2.0.0-beta.12"
-  }
+    "name": "vue-use-request",
+    "version": "0.3.2",
+    "scripts": {
+        "test": "jest",
+        "dev": "vite",
+        "prepublishOnly": "jest",
+        "build": "vuedx-typecheck ./src && vite build && tsc"
+    },
+    "files": [
+        "dist"
+    ],
+    "main": "dist/vue-use-request.umd.js",
+    "module": "dist/vue-use-request.es.js",
+    "types": "dist/index.d.ts",
+    "dependencies": {
+        "axios": "^0.21.1",
+        "lodash-es": "^4.17.21",
+        "vue": "^3.0.5"
+    },
+    "devDependencies": {
+        "@types/jest": "^26.0.20",
+        "@types/lodash-es": "^4.17.4",
+        "@vitejs/plugin-vue": "^1.0.4",
+        "@vue/compiler-sfc": "^3.0.5",
+        "@vuedx/typecheck": "^0.4.1",
+        "@vuedx/typescript-plugin-vue": "^0.4.1",
+        "esbuild-jest": "^0.5.0",
+        "jest": "^26.6.3",
+        "typescript": "^4.1.3",
+        "vite": "^2.0.0-beta.12"
+    }
 }

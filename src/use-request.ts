@@ -1,4 +1,4 @@
-import { ref, UnwrapRef, watch, unref, WatchSource } from 'vue';
+import { ref, watchEffect, watch, unref, WatchSource } from 'vue';
 import { getTime, TimeFormat } from './time';
 import { debounce, throttle } from 'lodash-es';
 
@@ -12,12 +12,12 @@ export interface IConfig<T> {
      */
     initalValue?: T,
     /**
-     * 当函数内的响应式数据变化时，会重新触发请求
-     *
+     * 当函数内的响应式数据变化时，会重新触发请求, 为 true 则自动进行依赖搜集
+     * default: true
      * @type {boolean}
      * @memberof IConfig
      */
-    watch?: MultiWatchSources;
+    watch?: MultiWatchSources | boolean;
     /**
      * 如果请求失败重试次数
      *
@@ -65,7 +65,7 @@ export interface IConfig<T> {
 
 const cacheMap = new Map<any, any>();
 
-export function useRequest<T, E extends any>(requestFn: () => Promise<T>, config: IConfig<T> = {}) {
+export function useRequest<T, E extends any>(requestFn: () => Promise<T>, config: IConfig<T> = { watch: true }) {
     const data = ref<T | null>();
     data.value = config?.initalValue ?? null;
     const loading = ref(false);
@@ -108,7 +108,7 @@ export function useRequest<T, E extends any>(requestFn: () => Promise<T>, config
             data.value = res;
             error.value = null;
         } catch (err) {
-            error.value = err;
+            error.value = err as any;
         }
 
         if (config.polling) {
@@ -129,11 +129,15 @@ export function useRequest<T, E extends any>(requestFn: () => Promise<T>, config
     }
 
     if (config.watch) {
-        watch(config.watch, handleRequest);
+        if (config.watch === true) {
+            watchEffect(handleRequest);
+        } else {
+            watch(config.watch, handleRequest);
+        }
     }
 
     
-    if (!config.lazy) {
+    if (!config.lazy && config.watch !== true) {
         handleRequest();
     }
 
